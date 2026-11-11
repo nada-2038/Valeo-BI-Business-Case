@@ -1,0 +1,55 @@
+-- Valeo BI Case: SQL
+-- Assumed the tables are: projects_hours, engineering_tickets, engineering_data (the three Excel sheets)
+
+-- A) Month, Project Code, Project Status, Actual Hours, Forecasted Hours:
+
+-- The Projects Hours sheet has no month column, only a week like '2022_W27', so I turned the week into the date of its Monday (STR_TO_DATE with %x%v %W)
+-- and took the month from that date.
+-- Project_Status is in the GROUP BY because some projects change status from one week to the next as time goes on.
+
+SELECT
+    DATE_FORMAT(STR_TO_DATE(CONCAT(LEFT(Week, 4), RIGHT(Week, 2), ' Monday'), '%x%v %W'), '%Y-%m') AS `Month`, `Project Code`,
+
+    Project_Status AS `Project Status`,
+    SUM(`Actual Hours`) AS `Actual Hours`,
+    SUM(`Forecasted hours`) AS `Forecasted Hours`
+
+FROM projects_hours
+
+GROUP BY
+    DATE_FORMAT(STR_TO_DATE(CONCAT(LEFT(Week, 4), RIGHT(Week, 2), ' Monday'), '%x%v %W'), '%Y-%m'),`Project Code`,
+    Project_Status
+
+ORDER BY `Month`, `Project Code`;
+
+
+
+-- B) Ticket Number, Project Code, Current Assignee, Assignee Department:
+
+-- Tickets are linked to engineers by Current Assignee= Name.
+-- A few names appear twice in engineering_data (different managers/departments), so a normal join would duplicate those tickets.
+-- I first make one row per name and if the two records have different departments I label it 'Ambiguous'.
+-- LEFT JOIN keeps tickets with no matching engineer (like the unassigned ones).
+-- The WHERE removes blank rows that have no Ticket Number.
+
+SELECT
+    t.`Ticket Number`,
+    t.`Project Code`,
+    t.`Current Assignee`,
+    e.Department AS `Assignee Department`
+
+FROM engineering_tickets AS t
+
+LEFT JOIN (
+    SELECT Name,
+           CASE WHEN COUNT(DISTINCT Department) = 1 
+                THEN MIN(Department) 
+                ELSE 'Ambiguous' 
+            END AS Department
+
+    FROM engineering_data
+    GROUP BY Name
+)
+
+AS e ON e.Name = t.`Current Assignee`
+WHERE t.`Ticket Number` IS NOT NULL;
