@@ -1,7 +1,8 @@
 # Valeo-BI-Business-Case
 
 The Google Colab Link (Python): https://colab.research.google.com/drive/1OLbG7IMI7Wb9ZZbHZTIJLFz42EgFikP1?usp=sharing
-Its also located in this repo under valeo-bi-case-study-git-program.ipynb
+
+(Its also located in this repo under valeo-bi-case-study-git-program.ipynb)
 
 
 The Data Studio Link (Dashboards): https://datastudio.google.com/reporting/425bd72b-c493-430e-95b2-b3d71cd2b2e4
