@@ -8,8 +8,8 @@ The Data Studio Link (Dashboards): https://datastudio.google.com/reporting/425bd
 
 
 
-The Excel Sheet Answers (Located in this repo): Excel Sheet Answers.xlsx
+The Excel Sheet Answers Link (Located in this repo): (https://github.com/nada-2038/Valeo-BI-Business-Case/blob/d64e3454f6c2aba15afa68797ab5ba3f82196223/Excel%20Sheet%20Answers.xlsx)
 
 
 
-The SQL Code (Located in this repo):
+The SQL Code Link (Located in this repo): https://github.com/nada-2038/Valeo-BI-Business Case/blob/d64e3454f6c2aba15afa68797ab5ba3f82196223/Valeo%20SQL%20Code
